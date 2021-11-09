@@ -1,16 +1,23 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as Sharing from "expo-sharing";
-import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { RootStackParamList } from "../../App";
+import React, { useLayoutEffect } from "react";
+import {
+  Button,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { StackParamList } from "./Home";
 
-export const ImageView: React.FC<
-  NativeStackScreenProps<RootStackParamList, "ImageDetail">
+export const ImageDetail: React.FC<
+  NativeStackScreenProps<StackParamList, "ImageDetail">
 > = ({ navigation, route }) => {
   const selectedImage = route.params;
 
   const handleGoBack = () => {
-    navigation.navigate("Home");
+    navigation.navigate("ImagePicker");
   };
 
   const openShareDialogAsync = async () => {
@@ -21,6 +28,14 @@ export const ImageView: React.FC<
 
     await Sharing.shareAsync(selectedImage?.localUri ?? "");
   };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button onPress={openShareDialogAsync} title="Share" />
+      ),
+    });
+  }, []);
 
   return (
     <View style={styles.container}>

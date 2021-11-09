@@ -1,18 +1,20 @@
+import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as ImagePicker from "expo-image-picker";
 import React from "react";
 import {
   Image,
+  Pressable,
   StyleSheet,
   Text,
   TouchableHighlight,
   View,
 } from "react-native";
-import { RootStackParamList } from "../../App";
 import logo from "../../assets/logo.png";
+import { StackParamList } from "./Home";
 
-export const Home: React.FC<
-  NativeStackScreenProps<RootStackParamList, "Home">
+export const ImagePickerScreen: React.FC<
+  NativeStackScreenProps<StackParamList, "ImagePicker">
 > = ({ navigation }) => {
   const openImagePickerAsyn = async () => {
     const permissonResult =
@@ -42,6 +44,24 @@ export const Home: React.FC<
       <TouchableHighlight onPress={openImagePickerAsyn} style={styles.button}>
         <Text style={styles.buttonText}>Pick a photo</Text>
       </TouchableHighlight>
+
+      <Pressable
+        android_disableSound={false}
+        onPress={() => {
+          alert("hello");
+        }}
+        style={({ pressed }) => ({
+          marginTop: 10,
+          padding: 10,
+          borderRadius: 50,
+          backgroundColor: pressed ? "#E2E8F0" : "#EDF2F7",
+          shadowColor: "#000000",
+          elevation: 5,
+          shadowOffset: { width: 10, height: 10 },
+        })}
+      >
+        <Ionicons name="water-sharp" size={32} color="#4299E1" />
+      </Pressable>
     </View>
   );
 };
